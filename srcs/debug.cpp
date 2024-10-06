@@ -1,7 +1,7 @@
 #include <fallchallenge.hpp>
 #include <debug.hpp>
 
-void	debug_routes(t_data	&data)
+void	debug_routes(t_data&	data)
 {
 	std::cerr << std::endl;
 	std::cerr << "/* ************************************************************************** */" << std::endl;
@@ -18,7 +18,7 @@ void	debug_routes(t_data	&data)
 	}
 }
 
-void	debug_pods(t_data &data)
+void	debug_pods(t_data& data)
 {
 	std::cerr << std::endl;
 	std::cerr << "/* ************************************************************************** */" << std::endl;
@@ -41,7 +41,7 @@ void	debug_pods(t_data &data)
 	}
 }
 
-void	debug_buildings(t_data &data)
+void	debug_buildings(t_data& data)
 {
 	std::cerr << std::endl;
 	std::cerr << "/* ************************************************************************** */" << std::endl;
@@ -70,7 +70,7 @@ void	debug_buildings(t_data &data)
 	std::cerr << std::endl;
 }
 
-void	debug_data(t_data &data)
+void	debug_data(t_data& data)
 {
 	std::cerr << "resources: " << data.resources << std::endl;
 

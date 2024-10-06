@@ -53,7 +53,8 @@ struct	s_building
 /*                                 DEBUG FILE                                 */
 /* ************************************************************************** */
 
-void	debug_routes(t_data	&data)
+/* ******************************* ROUTE DEBUG ****************************** */
+void	debug_routes(t_data&	data)
 {
 	std::cerr << std::endl;
 	std::cerr << "/* ************************************************************************** */" << std::endl;
@@ -70,7 +71,8 @@ void	debug_routes(t_data	&data)
 	}
 }
 
-void	debug_pods(t_data &data)
+/* ******************************** POD DEBUG ******************************* */
+void	debug_pods(t_data& data)
 {
 	std::cerr << std::endl;
 	std::cerr << "/* ************************************************************************** */" << std::endl;
@@ -93,7 +95,8 @@ void	debug_pods(t_data &data)
 	}
 }
 
-void	debug_buildings(t_data &data)
+/* ***************************** BUILDING DEBUG ***************************** */
+void	debug_buildings(t_data& data)
 {
 	std::cerr << std::endl;
 	std::cerr << "/* ************************************************************************** */" << std::endl;
@@ -122,7 +125,8 @@ void	debug_buildings(t_data &data)
 	std::cerr << std::endl;
 }
 
-void	debug_data(t_data &data)
+/* ******************************* MAIN DEBUG ******************************* */
+void	debug_data(t_data& data)
 {
 	std::cerr << "resources: " << data.resources << std::endl;
 
@@ -132,67 +136,92 @@ void	debug_data(t_data &data)
 }
 
 /* ************************************************************************** */
-/*                                  MAIN FILE                                 */
+/*                             INPUT_HANDLING FILE                            */
 /* ************************************************************************** */
 
+/* ************************* BUILDING INITIALIZATION ************************ */
+void	init_building(t_data& data)
+{
+	int	num_new_buildings;
+	std::cin >> num_new_buildings;
+	std::cin.ignore();
+	for (int i = 0; i < num_new_buildings; i++)
+	{
+		t_building	tmp_building;
+		std::cin >> tmp_building.type >> tmp_building.id;
+		std::cin >> tmp_building.pos.x >> tmp_building.pos.y;
+		if (tmp_building.type == 0) // if landing pad, get astronauts number and type
+		{
+			int	num_astronauts;
+			std::cin >> num_astronauts;
+			for (int j = 0; j < num_astronauts; j++)
+			{
+				int	astronaut_type;
+				std::cin >> astronaut_type;
+				tmp_building.astronaut_types.push_back(astronaut_type);
+			}
+		}
+		data.buildings.push_back(tmp_building);
+		std::cin.ignore();
+	}
+}
+
+/* *************************** POD INITIALIZATION *************************** */
+void	init_pod(t_data& data)
+{
+	int	num_pods;
+	std::cin >> num_pods; std::cin.ignore();
+	for (int i = 0; i < num_pods; i++)
+	{
+		t_pod	tmp_pod;
+		int	num_stops;
+		std::cin >> tmp_pod.id >> num_stops;
+		for (int j = 0; j < num_stops; j++)
+		{
+			int	stop_id;
+			std::cin >> stop_id;
+			tmp_pod.stops.push_back(stop_id);
+		}
+		std::cin.ignore();
+		data.pods.push_back(tmp_pod);
+	}
+}
+
+/* ************************** ROUTE INITIALIZATION ************************** */
+void	init_route(t_data& data)
+{
+	int	num_travel_routes;
+	std::cin >> num_travel_routes;
+	std::cin.ignore();
+	for (int i = 0; i < num_travel_routes; i++)
+	{
+		t_route	tmp_route;
+		std::cin >> tmp_route.building_id_1 >> tmp_route.building_id_2 >> tmp_route.capacity;
+		std::cin.ignore();
+		data.routes.push_back(tmp_route);
+	}
+}
+
+/* *************************** MAIN INITIALIZATION ************************** */
+void	init_data(t_data& data)
+{
+		std::cin >> data.resources;
+		std::cin.ignore();
+		init_route(data);
+		init_pod(data);
+		init_building(data);
+}
+
+/* ************************************************************************** */
+/*                                  MAIN FILE                                 */
+/* ************************************************************************** */
 t_data	data;
 
 int	main()
 {
 	while (42)
 	{
-		std::cin >> data.resources; std::cin.ignore();
-
-
-		// route initialization
-		int	num_travel_routes;
-		std::cin >> num_travel_routes; std::cin.ignore();
-		for (int i = 0; i < num_travel_routes; i++)
-		{
-			t_route	tmp_route;
-			std::cin >> tmp_route.building_id_1 >> tmp_route.building_id_2 >> tmp_route.capacity; std::cin.ignore();
-			data.routes.push_back(tmp_route);
-		}
-
-		// pod initialization
-		int	num_pods;
-		std::cin >> num_pods; std::cin.ignore();
-		for (int i = 0; i < num_pods; i++)
-		{
-			t_pod	tmp_pod;
-			int	num_stops;
-			std::cin >> tmp_pod.id >> num_stops;
-			for (int j = 0; j < num_stops; j++)
-			{
-				int	stop_id;
-				std::cin >> stop_id;
-				tmp_pod.stops.push_back(stop_id);
-			}
-			std::cin.ignore();
-		}
-
-		// building initialization
-		int	num_new_buildings;
-		std::cin >> num_new_buildings; std::cin.ignore();
-		for (int i = 0; i < num_new_buildings; i++)
-		{
-			t_building	tmp_building;
-			std::cin >> tmp_building.type >> tmp_building.id >> tmp_building.pos.x >> tmp_building.pos.y;
-			if (tmp_building.type == 0)
-			{
-				int	num_astronauts;
-				std::cin >> num_astronauts;
-				for (int j = 0; j < num_astronauts; j++)
-				{
-					int	astronaut_id;
-					std::cin >> astronaut_id;
-					tmp_building.astronaut_types.push_back(astronaut_id);
-				}
-			}
-			data.buildings.push_back(tmp_building);
-			std::cin.ignore();
-		}
-
+		init_data(data);
 		debug_data(data);
 
 		std::cout << "TUBE 0 1;TUBE 0 2;POD 42 0 1 0 2 0 1 0 2" << std::endl; // TUBE | UPGRADE | TELEPORT | POD | DESTROY | WAIT
