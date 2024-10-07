@@ -10,10 +10,12 @@ NAME	:=	fall2024
 # /////////////////////////////////// Files ////////////////////////////////// #
 LST_INCS	:=	debug.hpp \
 							fallchallenge.hpp \
-							input_handling.hpp
+							input_handling.hpp \
+							action.hpp
 LST_SRCS	:=	main.cpp \
 							debug.cpp \
-							input_handling.cpp
+							input_handling.cpp \
+							action.cpp
 LST_TMPT	:=
 LST_DEPS	:=	$(LST_SRCS:.cpp=.d)
 LST_OBJS	:=	$(LST_SRCS:.cpp=.o)

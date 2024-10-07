@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 
+/* ************************************************************************** */
+/*                                  DEBUG.HPP                                 */
+/* ************************************************************************** */
 void	debug_routes(t_data& data);
 void	debug_pods(t_data& data);
 void	debug_buildings(t_data& data);

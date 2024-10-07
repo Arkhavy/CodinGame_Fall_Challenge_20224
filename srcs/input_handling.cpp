@@ -1,6 +1,10 @@
 #include <fallchallenge.hpp>
 #include <input_handling.hpp>
 
+/* ************************************************************************** */
+/*                             INPUT_HANDLING.CPP                             */
+/* ************************************************************************** */
+
 /* ************************* BUILDING INITIALIZATION ************************ */
 void	init_building(t_data& data)
 {

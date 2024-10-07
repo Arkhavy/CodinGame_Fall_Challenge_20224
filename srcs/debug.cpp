@@ -1,6 +1,11 @@
 #include <fallchallenge.hpp>
 #include <debug.hpp>
 
+/* ************************************************************************** */
+/*                                  DEBUG.CPP                                 */
+/* ************************************************************************** */
+
+/* ******************************* ROUTE DEBUG ****************************** */
 void	debug_routes(t_data&	data)
 {
 	std::cerr << std::endl;
@@ -18,6 +23,7 @@ void	debug_routes(t_data&	data)
 	}
 }
 
+/* ******************************** POD DEBUG ******************************* */
 void	debug_pods(t_data& data)
 {
 	std::cerr << std::endl;
@@ -41,6 +47,7 @@ void	debug_pods(t_data& data)
 	}
 }
 
+/* ***************************** BUILDING DEBUG ***************************** */
 void	debug_buildings(t_data& data)
 {
 	std::cerr << std::endl;
@@ -70,6 +77,7 @@ void	debug_buildings(t_data& data)
 	std::cerr << std::endl;
 }
 
+/* ******************************* DATA DEBUG ******************************* */
 void	debug_data(t_data& data)
 {
 	std::cerr << "resources: " << data.resources << std::endl;

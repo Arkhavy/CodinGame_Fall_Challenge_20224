@@ -1,7 +1,6 @@
 /* ************************************************************************** */
-/*                           FALLCHALLENGE.HPP FILE                           */
+/*                              FALLCHALLENGE.HPP                             */
 /* ************************************************************************** */
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -50,7 +49,7 @@ struct	s_building
 };
 
 /* ************************************************************************** */
-/*                                 DEBUG FILE                                 */
+/*                                  DEBUG.CPP                                 */
 /* ************************************************************************** */
 
 /* ******************************* ROUTE DEBUG ****************************** */
@@ -125,7 +124,7 @@ void	debug_buildings(t_data& data)
 	std::cerr << std::endl;
 }
 
-/* ******************************* MAIN DEBUG ******************************* */
+/* ******************************* DATA DEBUG ******************************* */
 void	debug_data(t_data& data)
 {
 	std::cerr << "resources: " << data.resources << std::endl;
@@ -136,7 +135,7 @@ void	debug_data(t_data& data)
 }
 
 /* ************************************************************************** */
-/*                             INPUT_HANDLING FILE                            */
+/*                             INPUT_HANDLING.CPP                             */
 /* ************************************************************************** */
 
 /* ************************* BUILDING INITIALIZATION ************************ */
@@ -202,7 +201,7 @@ void	init_route(t_data& data)
 	}
 }
 
-/* *************************** MAIN INITIALIZATION ************************** */
+/* *************************** DATA INITIALIZATION ************************** */
 void	init_data(t_data& data)
 {
 		std::cin >> data.resources;
@@ -210,6 +209,55 @@ void	init_data(t_data& data)
 		init_route(data);
 		init_pod(data);
 		init_building(data);
+}
+
+#define MAX_CHECKPOINT_SIZE 20
+/* ************************************************************************** */
+/*                                 ACTION.CPP                                 */
+/* ************************************************************************** */
+
+/* ****************************** BASIC ACTIONS ***************************** */
+std::string	sendTransportMessage(std::string const action, int const buildingId1, int const buildingId2)
+{
+	std::string	result = action + " "; // action can be either TUBE, UPGRADE or TELEPORT
+	result += std::to_string(buildingId1) + " "; // TELEPORT action Entrance
+	result += std::to_string(buildingId2) + ";"; // TELEPORT action Exit
+	return (result);
+}
+
+std::string	createPod(int const podId, std::vector<int> const checkpointList)
+{
+	std::string	result = "POD " + std::to_string(podId) + " ";
+	for (unsigned int i = 0; i < checkpointList.size(); i++)
+	{
+		if (i != checkpointList.size() - 1)
+			result += std::to_string(checkpointList[i]) + " ";
+		else
+			result += std::to_string(checkpointList[i]) + ";";
+	}
+	return (result);
+}
+
+std::string	destroyPod(int const podId)
+{
+	std::string	result = "DESTROY " + std::to_string(podId) + ";";
+	return (result);
+}
+
+/* ***************************** ACTION MODULES ***************************** */
+std::string	createRoute(int const podId, int const buildingId1, int const buildingId2)
+{
+	std::string	result = sendTransportMessage("TUBE", buildingId1, buildingId2);
+	std::vector<int>	checkpointList;
+	for (int i = 0; i < MAX_CHECKPOINT_SIZE; i++)
+	{
+		if (i % 2 == 0)
+			checkpointList.push_back(buildingId1);
+		else
+			checkpointList.push_back(buildingId2);
+	}
+	result += createPod(podId, checkpointList);
+	return (result);
 }
 
 /* ************************************************************************** */
@@ -224,7 +272,10 @@ int	main()
 		init_data(data);
 		debug_data(data);
 
-		std::cout << "TUBE 0 1;TUBE 0 2;POD 42 0 1 0 2 0 1 0 2" << std::endl; // TUBE | UPGRADE | TELEPORT | POD | DESTROY | WAIT
+		std::string	output;
+		for (unsigned int i = 0; i < data.buildings.size() - 1; i++)
+			output += createRoute(i, data.buildings[i].id, data.buildings[i + 1].id);
+		std::cout << output << std::endl;
 	} // game loop
 	return (0);
 }
