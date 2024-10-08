@@ -7,7 +7,7 @@
 /* ************************************************************************** */
 /*                                  DEBUG.HPP                                 */
 /* ************************************************************************** */
-void	debug_routes(t_data& data);
-void	debug_pods(t_data& data);
-void	debug_buildings(t_data& data);
-void	debug_data(t_data& data);
+void	debugRoutes(t_data& data);
+void	debugPods(t_data& data);
+void	debugBuildings(t_data& data);
+void	debugData(t_data& data);

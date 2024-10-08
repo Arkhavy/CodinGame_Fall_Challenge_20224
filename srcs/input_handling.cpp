@@ -6,7 +6,7 @@
 /* ************************************************************************** */
 
 /* ************************* BUILDING INITIALIZATION ************************ */
-void	init_building(t_data& data)
+void	initBuilding(t_data& data)
 {
 	int	num_new_buildings;
 	std::cin >> num_new_buildings;
@@ -33,7 +33,7 @@ void	init_building(t_data& data)
 }
 
 /* *************************** POD INITIALIZATION *************************** */
-void	init_pod(t_data& data)
+void	initPod(t_data& data)
 {
 	int	num_pods;
 	std::cin >> num_pods; std::cin.ignore();
@@ -54,7 +54,7 @@ void	init_pod(t_data& data)
 }
 
 /* ************************** ROUTE INITIALIZATION ************************** */
-void	init_route(t_data& data)
+void	initRoute(t_data& data)
 {
 	int	num_travel_routes;
 	std::cin >> num_travel_routes;
@@ -69,11 +69,23 @@ void	init_route(t_data& data)
 }
 
 /* *************************** DATA INITIALIZATION ************************** */
-void	init_data(t_data& data)
+void	initData(t_data& data)
 {
 		std::cin >> data.resources;
 		std::cin.ignore();
-		init_route(data);
-		init_pod(data);
-		init_building(data);
+		initRoute(data);
+		initPod(data);
+		initBuilding(data);
+}
+
+/* ****************************** DATA DELETION ***************************** */
+void	clearData(t_data& data)
+{
+	data.routes.clear();
+	for (unsigned int i = 0; i < data.pods.size(); i++)
+		data.pods[i].stops.clear();
+	data.pods.clear();
+	for (unsigned int i = 0; i < data.buildings.size(); i++)
+		data.buildings[i].astronaut_types.clear();
+	data.buildings.clear();
 }

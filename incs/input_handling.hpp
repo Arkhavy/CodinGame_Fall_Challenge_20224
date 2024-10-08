@@ -7,7 +7,8 @@
 /* ************************************************************************** */
 /*                             INPUT_HANDLING.HPP                             */
 /* ************************************************************************** */
-void	init_building(t_data& data);
-void	init_pod(t_data& data);
-void	init_route(t_data& data);
-void	init_data(t_data& data);
+void	initBuilding(t_data& data);
+void	initPod(t_data& data);
+void	initRoute(t_data& data);
+void	initData(t_data& data);
+void	clearData(t_data& data);

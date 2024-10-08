@@ -6,7 +6,7 @@
 /* ************************************************************************** */
 
 /* ******************************* ROUTE DEBUG ****************************** */
-void	debug_routes(t_data&	data)
+void	debugRoutes(t_data&	data)
 {
 	std::cerr << std::endl;
 	std::cerr << "/* ************************************************************************** */" << std::endl;
@@ -24,7 +24,7 @@ void	debug_routes(t_data&	data)
 }
 
 /* ******************************** POD DEBUG ******************************* */
-void	debug_pods(t_data& data)
+void	debugPods(t_data& data)
 {
 	std::cerr << std::endl;
 	std::cerr << "/* ************************************************************************** */" << std::endl;
@@ -48,7 +48,7 @@ void	debug_pods(t_data& data)
 }
 
 /* ***************************** BUILDING DEBUG ***************************** */
-void	debug_buildings(t_data& data)
+void	debugBuildings(t_data& data)
 {
 	std::cerr << std::endl;
 	std::cerr << "/* ************************************************************************** */" << std::endl;
@@ -78,11 +78,11 @@ void	debug_buildings(t_data& data)
 }
 
 /* ******************************* DATA DEBUG ******************************* */
-void	debug_data(t_data& data)
+void	debugData(t_data& data)
 {
 	std::cerr << "resources: " << data.resources << std::endl;
 
-	debug_routes(data);
-	debug_pods(data);
-	debug_buildings(data);
+	debugRoutes(data);
+	debugPods(data);
+	debugBuildings(data);
 }
