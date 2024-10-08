@@ -1,12 +1,6 @@
-// #include <fallchallenge.hpp>
-// #include <action.hpp>
+#include <fallchallenge.hpp>
+#include <action.hpp>
 
-
-#include <iostream>
-#include <string>
-#include <vector>
-
-#define MAX_CHECKPOINT_SIZE 20
 /* ************************************************************************** */
 /*                                 ACTION.CPP                                 */
 /* ************************************************************************** */

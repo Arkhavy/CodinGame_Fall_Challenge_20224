@@ -50,4 +50,7 @@ struct	s_building
 	std::vector<int>	astronaut_types;
 };
 
+#define LANDING_PAD 0
+#define MAX_CHECKPOINT_SIZE 20
+
 // int	main();
