@@ -6,6 +6,7 @@
 bool	isAlreadyInRouteVector(t_route const& route, std::vector<t_route> const& routeVector);
 bool	isAlreadyInBuildingVector(t_building const& building, std::vector<t_building> const& buildingVector);
 bool	isRouteCreated(t_building const& building, t_building const& target);
+bool	isRouteCreated(std::vector<t_route> const& routes, t_building const& b1, t_building const& b2);
 bool	isInRoute(t_building const& building, t_route const& route);
 bool	isRouteCreationPossible(t_data const& data, t_building const& building, t_building const& target);
 

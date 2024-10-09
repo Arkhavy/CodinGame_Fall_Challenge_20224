@@ -25,6 +25,7 @@ struct	s_coord
 struct	s_data
 {
 	int	resources;
+	int	podNumber;
 
 	std::vector<t_route>			routes; // TUBES and TELEPORTERS
 	std::vector<t_pod>				pods; // PODS on TUBES

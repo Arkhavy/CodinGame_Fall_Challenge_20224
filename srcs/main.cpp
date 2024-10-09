@@ -4,10 +4,10 @@
 #include <fallmath.hpp>
 #include <action.hpp>
 
+t_data	data;
 /* ************************************************************************** */
 /*                                  MAIN.CPP                                  */
 /* ************************************************************************** */
-t_data	data;
 
 int	main()
 {
@@ -17,6 +17,7 @@ int	main()
 
 		initData(data);
 		initAdditionalData(data);
+		debugData(data);
 
 		// route creation
 		for (unsigned int i = 0; i < data.landingPads.size(); i++)
@@ -32,6 +33,8 @@ int	main()
 			{
 				if (isRouteCreated(data.landingPads[i], data.modules[j]))
 					continue; // if there is already a route created between the two buildings
+				if (isRouteCreated(data.routes, data.landingPads[i], data.modules[j]))
+					continue; // second check through route vector
 
 				double	currentDistance = getDistance(data.landingPads[i], data.modules[j]);
 				if (tmpTarget.id == -1 || tmpDistance == 0 || tmpDistance > currentDistance)
@@ -45,11 +48,11 @@ int	main()
 				if (isRouteCreationPossible(data, data.landingPads[i], tmpTarget))
 				{
 					output += createRoute(data.pods.size(), data.landingPads[i].id, tmpTarget.id);
-					// data.resources -= getDistance(data.landingPads[i], tmpTarget);
+					data.resources -= getDistance(data.landingPads[i], tmpTarget);
+					data.podNumber++;
 				}
 			}
 		}
-		// debugData(data);
 		if (output.empty() || output == "")
 			output = "WAIT;";
 		std::cout << output << std::endl;

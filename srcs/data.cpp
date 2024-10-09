@@ -41,6 +41,16 @@ bool	isRouteCreated(t_building const& building, t_building const& target)
 	return (false);
 }
 
+bool	isRouteCreated(std::vector<t_route> const& routes, t_building const& b1, t_building const& b2)
+{
+	for (unsigned int i = 0; i < routes.size(); i++)
+	{
+		if (isInRoute(b1, routes[i]) && isInRoute(b2, routes[i]))
+			return (true);
+	}
+	return (false);
+}
+
 bool	isInRoute(t_building const& building, t_route const& route)
 {
 	if (building.id == route.b1Id || building.id == route.b2Id)
@@ -70,9 +80,8 @@ bool	isRouteCreationPossible(t_data const& data, t_building const& building, t_b
 
 	// Check resource usage
 	double	distance = getDistance(building, target);
-	std::cerr << "Distance = " << distance << std::endl;
-	// if ((distance + COST_POD) >= data.resources)
-	// 	return (false); // not enough resource to build the route with pod included
+	if ((distance * 10 + COST_POD) >= data.resources)
+		return (false); // not enough resource to build the route with pod included
 	return (true);
 }
 
@@ -211,6 +220,7 @@ void	initAdditionalRoute(t_data& data)
 
 void	initAdditionalData(t_data& data)
 {
+	data.podNumber = data.pods.size();
 	initAdditionalRoute(data);
 	initAdditionalBuilding(data);
 }
