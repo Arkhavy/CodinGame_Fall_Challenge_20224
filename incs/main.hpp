@@ -66,3 +66,5 @@ struct	s_pod
 #define	LANDING_PAD					0
 #define MAX_LINKED_ROUTES		5
 #define MAX_POD_CHECKPOINT	20
+#define COST_POD						1000
+#define COST_TELEPORT				5000

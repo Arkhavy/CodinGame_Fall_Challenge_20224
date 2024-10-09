@@ -1,9 +1,80 @@
 #include <main.hpp>
 #include <data.hpp>
+#include <fallmath.hpp>
 
 /* ************************************************************************** */
 /*                                  DATA.CPP                                  */
 /* ************************************************************************** */
+
+/* *************************** UTILITARY FUNCTIONS ************************** */
+bool	isAlreadyInBuildingVector(t_building const& building, std::vector<t_building> const& buildingVector)
+{
+	for (unsigned int i = 0; i < buildingVector.size(); i++)
+	{
+		if (building.id == buildingVector[i].id)
+			return (true);
+	}
+	return (false);
+}
+
+bool	isAlreadyInRouteVector(t_route const& route, std::vector<t_route> const& routeVector)
+{
+	for (unsigned int i = 0; i < routeVector.size(); i++)
+	{
+		if (route.b1Id == routeVector[i].b1Id)
+			if (route.b2Id == routeVector[i].b2Id)
+				return (true);
+		if (route.b2Id == routeVector[i].b1Id)
+			if (route.b1Id == routeVector[i].b2Id)
+				return (true);
+	}
+	return (false);
+}
+
+bool	isRouteCreated(t_building const& building, t_building const& target)
+{
+	for (unsigned int i = 0; i < building.routes.size(); i++)
+	{
+		if (target.id == building.routes[i].b1Id || target.id == building.routes[i].b2Id)
+			return (true);
+	}
+	return (false);
+}
+
+bool	isInRoute(t_building const& building, t_route const& route)
+{
+	if (building.id == route.b1Id || building.id == route.b2Id)
+		return (true);
+	return (false);
+}
+
+bool	isRouteCreationPossible(t_data const& data, t_building const& building, t_building const& target)
+{
+	// Check if a building is on the segment about to be created
+	for (unsigned int i = 0; i < data.buildings.size(); i++)
+	{
+		if (data.buildings[i].id == building.id || data.buildings[i].id == target.id)
+			continue; // if building C = building A or B, no need to check
+		if (isOnSegment(building, target, data.buildings[i]))
+			return (false); // means data.buildings[i] is between building and tmpTarget
+	}
+
+	// Check if a segment is crossing the segment about to be created
+	for (unsigned int i = 0; i < data.routes.size(); i++)
+	{
+		if (isInRoute(building, data.routes[i]) || isInRoute(target, data.routes[i]))
+			continue; //  no need to check if building or target are concerned by the route about to be checked
+		if (isCrossing(building, target, data.routes[i].b1, data.routes[i].b2))
+			return (false); // means the route about to be created is crossed by an already existing route
+	}
+
+	// Check resource usage
+	double	distance = getDistance(building, target);
+	std::cerr << "Distance = " << distance << std::endl;
+	// if ((distance + COST_POD) >= data.resources)
+	// 	return (false); // not enough resource to build the route with pod included
+	return (true);
+}
 
 /* ************************ MAIN DATA INITIALIZATION ************************ */
 void	initBuilding(t_data& data)
@@ -83,30 +154,6 @@ void	initData(t_data& data)
 }
 
 /* ********************* ADDITIONAL DATA INITIALIZATION ********************* */
-bool	isAlreadyInBuildingVector(t_building const& building, std::vector<t_building> const& buildingVector)
-{
-	for (unsigned int i = 0; i < buildingVector.size(); i++)
-	{
-		if (building.id == buildingVector[i].id)
-			return (true);
-	}
-	return (false);
-}
-
-bool	isAlreadyInRouteVector(t_route const& route, std::vector<t_route> const& routeVector)
-{
-	for (unsigned int i = 0; i < routeVector.size(); i++)
-	{
-		if (route.b1Id == routeVector[i].b1Id)
-			if (route.b2Id == routeVector[i].b2Id)
-				return (true);
-		if (route.b2Id == routeVector[i].b1Id)
-			if (route.b1Id == routeVector[i].b2Id)
-				return (true);
-	}
-	return (false);
-}
-
 void	addRoutesToBuilding(t_building& building, std::vector<t_route>& routes)
 {
 	for (unsigned int j = 0; j < routes.size(); j++)
