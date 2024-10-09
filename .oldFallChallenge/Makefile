@@ -8,8 +8,18 @@ NAME	:=	fall2024
 # //////////////////////////////////////////////////////////////////////////// #
 
 # /////////////////////////////////// Files ////////////////////////////////// #
-LST_INCS	:=	main.hpp data.hpp debug.hpp action.hpp fallmath.hpp
-LST_SRCS	:=	main.cpp data.cpp debug.cpp action.cpp fallmath.cpp
+LST_INCS	:=	debug.hpp \
+							fallchallenge.hpp \
+							input_handling.hpp \
+							action.hpp \
+							fallmath.hpp \
+							utils.hpp
+LST_SRCS	:=	main.cpp \
+							debug.cpp \
+							input_handling.cpp \
+							action.cpp \
+							fallmath.cpp \
+							utils.cpp
 LST_TMPT	:=
 LST_DEPS	:=	$(LST_SRCS:.cpp=.d)
 LST_OBJS	:=	$(LST_SRCS:.cpp=.o)
